@@ -1,0 +1,4 @@
+- source: presentation.qmd
+  quarto-pub:
+    - id: 36d198fc-6608-43b5-a36e-c0a2ed6d3a84
+      url: 'https://quartopub.com/sites/e-burn/r-packages'
