@@ -102,7 +102,7 @@ measurement_summary(flipper_length_mm) %>% head(2)
 ```{r}
 measurement_summary<-function(data, var, groupings=c("species", "sex")){
 data %>% 
-  group_by(across(groupings)) %>% 
+  group_by(across(all_of(groupings))) %>% 
   summarise(min = min({{ var }}, na.rm=TRUE),
             median = quantile({{ var }}, 0.5, na.rm=TRUE),
             max = max({{ var }}, na.rm=TRUE))
@@ -179,7 +179,7 @@ usethis::use_r("measurement_summary")
 ```{r, eval=FALSE}
 measurement_summary<-function(data, var, groupings=c("species", "sex")){
   data %>%
-    group_by(across(.env$groupings)) %>%
+    group_by(across(all_of(.env$groupings))) %>%
     summarise(min = min(!!!syms(var), na.rm=TRUE),
                      median = quantile(!!!syms(var), 0.5, na.rm=TRUE),
                      max = max(!!!syms(var), na.rm=TRUE))
@@ -205,7 +205,7 @@ devtools::check()
 ```{r}
 measurement_summary<-function(data, var, groupings=c("species", "sex")){
   data %>%
-    dplyr::group_by(dplyr::across(groupings)) %>%
+    dplyr::group_by(dplyr::across(all_of(groupings))) %>%
     dplyr::summarise(min = min({{ var }}, na.rm=TRUE),
                      median = stats::quantile({{ var }}, 0.5, na.rm=TRUE),
                      max = max({{ var }}, na.rm=TRUE))
@@ -217,7 +217,7 @@ measurement_summary<-function(data, var, groupings=c("species", "sex")){
 ```{r, eval=FALSE}
 measurement_summary<-function(data, var, groupings=c("species", "sex")){
   data %>%
-    dplyr::group_by(dplyr::across(.env$groupings)) %>%
+    dplyr::group_by(dplyr::across(all_of(.env$groupings))) %>%
     dplyr::summarise(min = min({{ var }}, na.rm=TRUE),
                      median = stats::quantile({{ var }}, 0.5, na.rm=TRUE),
                      max = max({{ var }}, na.rm=TRUE))
@@ -308,7 +308,7 @@ measurement_summary<-function(data, var, groupings=c("species", "sex")){
   checkmate::reportAssertions(collection = errorMessage)
 
   data %>%
-    dplyr::group_by(dplyr::across(.env$groupings)) %>%
+    dplyr::group_by(dplyr::across(all_of(.env$groupings))) %>%
     dplyr::summarise(min = min(!!!rlang::syms(var), na.rm=TRUE),
                      median = stats::quantile(!!!rlang::syms(var), 0.5, na.rm=TRUE),
                      max = max(!!!rlang::syms(var), na.rm=TRUE))
@@ -330,6 +330,12 @@ measurement_summary(penguins,var="sex")
 usethis::use_package("checkmate")
 usethis::use_package("glue")
 ```
+
+### Insert a Roxygen skeleton, there is two options:
+
+### 1) Place your cursor anywhere in the function you want to document and click Code Tools -\> Insert Roxygen Skeleton
+
+### 2) Place your cursor anywhere in the function you want to document and use the keyboard shortcut Ctrl+Shift+Alt+R
 
 <br/>
 
@@ -373,11 +379,17 @@ measurement_summary<-function(data, var, groupings=c("species", "sex")){
   checkmate::reportAssertions(collection = errorMessage)
 
   data %>%
-    dplyr::group_by(dplyr::across(.env$groupings)) %>%
+    dplyr::group_by(dplyr::across(all_of(.env$groupings))) %>%
     dplyr::summarise(min = min(!!!rlang::syms(var), na.rm=TRUE),
                      median = stats::quantile(!!!rlang::syms(var), 0.5, na.rm=TRUE),
                      max = max(!!!rlang::syms(var), na.rm=TRUE))
 }
+```
+
+## To update the documentation and export the function
+
+```{r, eval=FALSE}
+devtools::check_man()
 ```
 
 ## Testing
