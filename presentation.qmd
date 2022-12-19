@@ -331,6 +331,12 @@ usethis::use_package("checkmate")
 usethis::use_package("glue")
 ```
 
+### Insert a Roxygen skeleton, there is two options:
+
+### 1) Place your cursor anywhere in the function you want to document and click Code Tools -\> Insert Roxygen Skeleton
+
+### 2) Place your cursor anywhere in the function you want to document and use the keyboard shortcut Ctrl+Shift+Alt+R
+
 <br/>
 
 . . .
@@ -378,6 +384,12 @@ measurement_summary<-function(data, var, groupings=c("species", "sex")){
                      median = stats::quantile(!!!rlang::syms(var), 0.5, na.rm=TRUE),
                      max = max(!!!rlang::syms(var), na.rm=TRUE))
 }
+```
+
+## To update the documentation and export the function
+
+```{r, eval=FALSE}
+devtools::check_man()
 ```
 
 ## Testing
